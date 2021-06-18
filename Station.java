@@ -18,24 +18,8 @@ public class Station implements Comparable<Station>{
         this.adjacent = new Hashtable<>();
     }
 
-    public Station(String key, String name, String line, long dist){
-        this.key = key;
-        this.name = name;
-        this.line = line;
-        this.dist = dist;
-        this.visited = false;
-        this.adjacent = new Hashtable<>();
-    }
-
-    public void clear(){
-        this.dist = INFINITY;
-    }
-
     @Override
     public int compareTo(Station o) {
-        int ans;
-        if(this.dist > o.dist) return 1;
-        else if(this.dist < o.dist) return -1;
-        else return 0;
+        return Long.compare(this.dist, o.dist);
     }
 }

@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Subway {
@@ -45,8 +44,6 @@ public class Subway {
         Station top;
         while(true){
             top = undetermined.remove();
-//            System.out.println(top.name);
-//            System.out.println(top.dist);
             top.visited = true;
             if(top.name.equals(dest)) break;
             Hashtable<String, Long> adjacent = map.search_adjacent(top.key);
@@ -65,10 +62,8 @@ public class Subway {
         }
         //여기서 top은 destination
         time = top.dist;
-//        System.out.println(top.name);
         while(!top.name.equals(origin)){
             path.add(top.name);
-//            System.out.println(top.name);
             top = prev.get(top);
         }
         path.add(top.name); //origin 한번 추가
