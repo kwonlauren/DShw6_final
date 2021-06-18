@@ -1,13 +1,13 @@
 import java.util.Hashtable;
 
 public class Station implements Comparable<Station>{
-    static final int INFINITY = 2147483647;
+    static final long INFINITY = 9223372036854775807L;
     public String key;
     public String name;
     public String line;
-    public int dist;
+    public long dist;
     boolean visited;
-    Hashtable<String, Integer> adjacent;
+    Hashtable<String, Long> adjacent;
 
     public Station(String key, String name, String line){
         this.key = key;
@@ -18,7 +18,7 @@ public class Station implements Comparable<Station>{
         this.adjacent = new Hashtable<>();
     }
 
-    public Station(String key, String name, String line, int dist){
+    public Station(String key, String name, String line, long dist){
         this.key = key;
         this.name = name;
         this.line = line;

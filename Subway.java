@@ -17,9 +17,8 @@ public class Subway {
         while ((line = br.readLine()) != null) {
             //graph에 edge 추가
             String[] strs = line.split(" ");
-            map.insert_edge(strs[0], strs[1], Integer.parseInt(strs[2]));
+            map.insert_edge(strs[0], strs[1], Long.parseLong(strs[2]));
         }
-
 
         BufferedReader br2 = new BufferedReader(new InputStreamReader(System.in));
         while (true)
@@ -35,24 +34,26 @@ public class Subway {
 
     public static String dijkstra(String origin, String dest, Graph map){
         //origin_num(이름)에서 dest_num(이름)으로의 최단경로 역 이름들 List, 소요시간 return
-        //Hashtable<String, Integer> dist = new Hashtable<>(); //최단경로 거리 계산 끝난애들 저장
+
         PriorityQueue<Station> undetermined = new PriorityQueue<>();
         Hashtable<Station, Station> prev = new Hashtable<>();
         ArrayList<String> path = new ArrayList<>();
-        int time;
+        long time;
 
         map.initialize(undetermined, origin, dest);
 
         Station top;
         while(true){
             top = undetermined.remove();
+//            System.out.println(top.name);
+//            System.out.println(top.dist);
             top.visited = true;
             if(top.name.equals(dest)) break;
-            Hashtable<String, Integer> adjacent = map.search_adjacent(top.key);
-            for(Map.Entry<String, Integer> entry : adjacent.entrySet()){
+            Hashtable<String, Long> adjacent = map.search_adjacent(top.key);
+            for(Map.Entry<String, Long> entry : adjacent.entrySet()){
                 Station adjSt = map.getStation(entry.getKey());
                 if(!adjSt.visited){//unvisited
-                    int alt = top.dist + entry.getValue();
+                    long alt = top.dist + entry.getValue();
                     if(alt < adjSt.dist){ //relaxation
                         undetermined.remove(adjSt);//없애볼수도?
                         adjSt.dist = alt;
@@ -64,9 +65,10 @@ public class Subway {
         }
         //여기서 top은 destination
         time = top.dist;
-
-        while(top.name != origin){
+//        System.out.println(top.name);
+        while(!top.name.equals(origin)){
             path.add(top.name);
+//            System.out.println(top.name);
             top = prev.get(top);
         }
         path.add(top.name); //origin 한번 추가
@@ -74,9 +76,9 @@ public class Subway {
         return dij_to_str(path, time);
     }
 
-    private static String dij_to_str(ArrayList<String> path, int time){
+    private static String dij_to_str(ArrayList<String> path, long time){
         StringBuilder str = new StringBuilder();
-        int len = path.size();
+        long len = path.size();
         for(int i=0; i<len; i++){
             if((i<len-1) && path.get(i+1).equals(path.get(i))){
                 str.append("[");
